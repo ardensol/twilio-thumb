@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   resources :quotes
 
-  match 'sms' => 'quotes#sms', :via => :post
-
+  scope 'api' do
+    scope 'v1' do
+      scope 'sms' do
+        post '/' => 'quotes#sms'
+      end
+    end
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
