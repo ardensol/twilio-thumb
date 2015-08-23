@@ -61,15 +61,17 @@ class QuotesController < ApplicationController
     @quote.name = thumbtack_link
     @quote.save
 
-  
-    obtain_thumbtack_quote_info(quote_link)
+    q = @quote
+
+    obtain_thumbtack_quote_info(q)
+
   end
 
-  def obtain_thumbtack_quote_info(thumbtack_link)
+  def obtain_thumbtack_quote_info(q)
   
     m = Mechanize.new
 
-    m.get(thumbtack_link) do |login_page|
+    m.get(q.name) do |login_page|
       loggedin_page = login_page.form_with(:id => 'login') do |form|
         username_field = form.field_with(:id => 'login_email')
         username_field.value = ENV['thumbtack_un']
@@ -80,7 +82,7 @@ class QuotesController < ApplicationController
       lead_page = m.get('http://thmtk.com/Yy2XwJr2')
       parsed_page = lead_page.parser            
       
-      q = Quote.new        
+            
       q.type_of_home = parsed_page.css('.request-info')[1].text
       q.recurrence = parsed_page.css('.request-info')[2].text
       q.day_preference = parsed_page.css('.request-info')[3].text
