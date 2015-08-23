@@ -56,11 +56,13 @@ class QuotesController < ApplicationController
     text_body = request['Body']
 
     link = text_body.split('/').last
+    thumbtack_link = "http://thmtk.com/#{link}"
 
-    @quote.name = "http://thmtk.com/#{link}"
+    @quote.name = thumbtack_link
     @quote.save
+
   
-    obtain_thumbtack_quote_info(@quote.name)
+    obtain_thumbtack_quote_info(quote_link)
   end
 
   def obtain_thumbtack_quote_info(thumbtack_link)
