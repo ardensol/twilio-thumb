@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Quotes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quote type</th>
+      <th>Type of home</th>
+      <th>Recurrence</th>
+      <th>Day preference</th>
+      <th>Time preference</th>
+      <th>Bedrooms</th>
+      <th>Bathrooms</th>
+      <th>Square feet</th>
+      <th>Cleaning supplies</th>
+      <th>Eco friendly</th>
+      <th>Laundry</th>
+      <th>Pets</th>
+      <th>Refrigerator</th>
+      <th>Oven</th>
+      <th>Windows</th>
+      <th>Location</th>
+      <th>Request time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quotes.each do |quote| %>
+      <tr>
+        <td><%= quote.name %></td>
+        <td><%= quote.quote_type %></td>
+        <td><%= quote.type_of_home %></td>
+        <td><%= quote.recurrence %></td>
+        <td><%= quote.day_preference %></td>
+        <td><%= quote.time_preference %></td>
+        <td><%= quote.bedrooms %></td>
+        <td><%= quote.bathrooms %></td>
+        <td><%= quote.square_feet %></td>
+        <td><%= quote.cleaning_supplies %></td>
+        <td><%= quote.eco_friendly %></td>
+        <td><%= quote.laundry %></td>
+        <td><%= quote.pets %></td>
+        <td><%= quote.refrigerator %></td>
+        <td><%= quote.oven %></td>
+        <td><%= quote.windows %></td>
+        <td><%= quote.location %></td>
+        <td><%= quote.request_time %></td>
+        <td><%= link_to 'Show', quote %></td>
+        <td><%= link_to 'Edit', edit_quote_path(quote) %></td>
+        <td><%= link_to 'Destroy', quote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Quote', new_quote_path %>

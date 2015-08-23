@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  quote_type: MyString
+  type_of_home: MyString
+  recurrence: MyString
+  day_preference: MyString
+  time_preference: MyString
+  bedrooms: MyString
+  bathrooms: MyString
+  square_feet: MyString
+  cleaning_supplies: MyString
+  eco_friendly: false
+  laundry: false
+  pets: false
+  refrigerator: false
+  oven: false
+  windows: false
+  location: MyString
+  request_time: MyString
+
+two:
+  name: MyString
+  quote_type: MyString
+  type_of_home: MyString
+  recurrence: MyString
+  day_preference: MyString
+  time_preference: MyString
+  bedrooms: MyString
+  bathrooms: MyString
+  square_feet: MyString
+  cleaning_supplies: MyString
+  eco_friendly: false
+  laundry: false
+  pets: false
+  refrigerator: false
+  oven: false
+  windows: false
+  location: MyString
+  request_time: MyString

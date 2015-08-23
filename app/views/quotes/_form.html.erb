@@ -1,0 +1,89 @@
+<%= form_for(@quote) do |f| %>
+  <% if @quote.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quote.errors.count, "error") %> prohibited this quote from being saved:</h2>
+
+      <ul>
+      <% @quote.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :quote_type %><br>
+    <%= f.text_field :quote_type %>
+  </div>
+  <div class="field">
+    <%= f.label :type_of_home %><br>
+    <%= f.text_field :type_of_home %>
+  </div>
+  <div class="field">
+    <%= f.label :recurrence %><br>
+    <%= f.text_field :recurrence %>
+  </div>
+  <div class="field">
+    <%= f.label :day_preference %><br>
+    <%= f.text_field :day_preference %>
+  </div>
+  <div class="field">
+    <%= f.label :time_preference %><br>
+    <%= f.text_field :time_preference %>
+  </div>
+  <div class="field">
+    <%= f.label :bedrooms %><br>
+    <%= f.text_field :bedrooms %>
+  </div>
+  <div class="field">
+    <%= f.label :bathrooms %><br>
+    <%= f.text_field :bathrooms %>
+  </div>
+  <div class="field">
+    <%= f.label :square_feet %><br>
+    <%= f.text_field :square_feet %>
+  </div>
+  <div class="field">
+    <%= f.label :cleaning_supplies %><br>
+    <%= f.text_field :cleaning_supplies %>
+  </div>
+  <div class="field">
+    <%= f.label :eco_friendly %><br>
+    <%= f.check_box :eco_friendly %>
+  </div>
+  <div class="field">
+    <%= f.label :laundry %><br>
+    <%= f.check_box :laundry %>
+  </div>
+  <div class="field">
+    <%= f.label :pets %><br>
+    <%= f.check_box :pets %>
+  </div>
+  <div class="field">
+    <%= f.label :refrigerator %><br>
+    <%= f.check_box :refrigerator %>
+  </div>
+  <div class="field">
+    <%= f.label :oven %><br>
+    <%= f.check_box :oven %>
+  </div>
+  <div class="field">
+    <%= f.label :windows %><br>
+    <%= f.check_box :windows %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :request_time %><br>
+    <%= f.text_field :request_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
