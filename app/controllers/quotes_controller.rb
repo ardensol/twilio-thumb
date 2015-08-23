@@ -1,6 +1,6 @@
 class QuotesController < ApplicationController
   before_action :set_quote, only: [:show, :edit, :update, :destroy]
-
+  skip_before_filter :verify_authenticity_token, :only => [:sms]
   # GET /quotes
   # GET /quotes.json
   def index
@@ -49,6 +49,11 @@ class QuotesController < ApplicationController
         format.json { render json: @quote.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def sms
+    @quote = Quote.new
+    @quote.save
   end
 
   # DELETE /quotes/1
