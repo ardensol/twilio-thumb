@@ -53,6 +53,7 @@ class QuotesController < ApplicationController
 
   def sms
     @quote = Quote.new
+    @quote.name = request['Body']
     @quote.save
   end
 
