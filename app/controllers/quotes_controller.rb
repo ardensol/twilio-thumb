@@ -53,8 +53,49 @@ class QuotesController < ApplicationController
 
   def sms
     @quote = Quote.new
-    @quote.name = request['Body']
+    text_body = request['Body']
+
+    link = text_body.split('/').last
+
+    @quote.name = "http://thmtk.com/#{link}"
     @quote.save
+  
+  end
+
+  def obtain_thumbtack_quote_info
+  
+    m = Mechanize.new
+
+    m.get('https://www.thumbtack.com/login') do |login_page|
+      loggedin_page = login_page.form_with(:id => 'login') do |form|
+        username_field = form.field_with(:id => 'login_email')
+        username_field.value = ENV['thumbtack_un']
+        password_field = form.field_with(:id => 'login_password')
+        password_field.value = ENV['thumbtack_pw']
+      end.submit
+
+    lead_page = m.get('http://thmtk.com/Yy2XwJr2')
+    parsed_page = lead_page.parser            
+    
+    q = Quote.new        
+    q.type_of_home = parsed_page.css('.request-info')[1].text
+    q.recurrence = parsed_page.css('.request-info')[2].text
+    q.day_preference = parsed_page.css('.request-info')[3].text
+    q.time_preference = parsed_page.css('.request-info')[4].text
+    q.bedrooms = parsed_page.css('.request-info')[5].text
+    q.bathrooms = parsed_page.css('.request-info')[6].text
+    q.square_feet = parsed_page.css('.request-info')[7].text
+    q.cleaning_supplies = parsed_page.css('.request-info')[8].text
+    # q.eco_friendly = parsed_page.css('.request-info')[2].text
+    # q.pets = parsed_page.css('.request-info')[2].text
+    # q.laundry = parsed_page.css('.request-info')[2].text
+    # q.refrigerator = parsed_page.css('.request-info')[2].text
+    # q.oven = parsed_page.css('.request-info')[2].text
+    # q.windows = parsed_page.css('.request-info')[2].text
+
+
+    q.save
+  
   end
 
   # DELETE /quotes/1
