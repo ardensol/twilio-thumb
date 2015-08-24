@@ -133,7 +133,7 @@ class QuotesController < ApplicationController
     elsif quote.recurrence == "Once a month"
       amount = 10
     else
-      break
+      amount = 100
     end
 
     quoted_value = amount * discount / 100
