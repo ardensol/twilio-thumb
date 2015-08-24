@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  post 'submit_quote/:id', :to => 'quote#submit_quote', as: 'quote_submission'
+  match 'submit_quote/:id', :to => 'quotes#submit_quote', as: 'quote_submission', via: [:get, :post]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

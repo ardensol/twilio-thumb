@@ -1,5 +1,6 @@
 class QuotesController < ApplicationController
   before_action :set_quote, only: [:show, :edit, :update, :destroy, :submit_quote]
+  after_action :submit_quote, only: [:sms]
   skip_before_filter :verify_authenticity_token, :only => [:sms]
   # GET /quotes
   # GET /quotes.json
@@ -92,7 +93,7 @@ class QuotesController < ApplicationController
       quote.square_feet = parsed_page.css('.request-info')[7].text
       quote.cleaning_supplies = parsed_page.css('.request-info')[8].text
       # quote.eco_friendly = parsed_page.css('.request-info')[2].text
-      # quote.pets = parsed_page.css('.request-info')[2].text
+      # quote.pets = parsed_page.css('.request-info')[2].text d
       # quote.qndry = parsed_page.css('.request-info')[2].text
       # quote.refrigerator = parsed_page.css('.request-info')[2].text
       # quote.oven = parsed_page.css('.request-info')[2].text
@@ -127,12 +128,12 @@ class QuotesController < ApplicationController
     elsif @quote.recurrence == "Every other week"
       discount = 15
     elsif @quote.recurrence == "Once a month"
-      amount = 10
+      discount = 10
     else
-      amount = 100
+      discount = 100
     end
 
-    quoted_value = amount * discount / 100
+    quoted_value = amount.to_f - amount.to_f * (discount.to_f / 100 )
 
     m = Mechanize.new
 
@@ -145,11 +146,11 @@ class QuotesController < ApplicationController
       end.submit
 
       lead_page = m.get(@quote.name).form_with(id: "quote-on-request") do |form|
-        form.field_with(:name => 'size').options[0].click
+        form.field_with(:id => 'estimate_type').options[0].click
         quote_price_field = form.field_with(:id => 'estimate_fixed_price_per_unit')
         quote_price_field.value = quoted_value
         quote_message_field = form.field_with(id: 'message')
-        quote_message_field.value = "Hi ,\nWe have a flat rate for a #{quote.bedrooms} bedroom, home of $#{quoted_value}.\nAnything else such as laundry, refrigerator, oven, and window cleaning is an extra $25.\nBook a cleaning by using our website at www.maidfox.com or call us at (480) 360-6243 (MAID) today.\nWe're a top rated Phoenix area service and look forward to working with you!\nThanks!\nCarlos"
+        quote_message_field.value = "Hi ,\n\nWe have a flat rate for #{@quote.bedrooms}, home of $#{quoted_value}.\n\nAnything else such as laundry, refrigerator, oven, and window cleaning is an extra $25.\n\nBook a cleaning by using our website at www.maidfox.com or call us at (480) 360-6243 (MAID) today.\n\nWe're a top rated Phoenix area service and look forward to working with you!\n\nThanks!\n\nCarlos"
       end.submit      
 
     end
