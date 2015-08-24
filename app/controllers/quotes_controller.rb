@@ -1,5 +1,5 @@
 class QuotesController < ApplicationController
-  before_action :set_quote, only: [:show, :edit, :update, :destroy]
+  before_action :set_quote, only: [:show, :edit, :update, :destroy, :submit_quote]
   skip_before_filter :verify_authenticity_token, :only => [:sms]
   # GET /quotes
   # GET /quotes.json
@@ -104,31 +104,29 @@ class QuotesController < ApplicationController
   
   end
 
-  def submit_quote(quote)
+  def submit_quote
 
-    quote = Quote.find_by_id(quote)
-
-    if quote.bedrooms == "Studio"
+    if @quote.bedrooms == "Studio"
       amount = 119
-    elsif quote.bedrooms == "1 bedroom"
+    elsif @quote.bedrooms == "1 bedroom"
       amount = 129
-    elsif quote.bedrooms == "2 bedrooms"
+    elsif @quote.bedrooms == "2 bedrooms"
       amount = 139
-    elsif quote.bedrooms == "3 bedrooms"
+    elsif @quote.bedrooms == "3 bedrooms"
       amount = 159
-    elsif quote.bedrooms == "4 bedrooms"
+    elsif @quote.bedrooms == "4 bedrooms"
       amount = 189
-    elsif quote.bedrooms == "5 bedrooms"
+    elsif @quote.bedrooms == "5 bedrooms"
       amount = 219
-    elsif quote.bedrooms == "5+ bedrooms"
+    elsif @quote.bedrooms == "5+ bedrooms"
       amount = 249  
     end
 
-    if quote.recurrence == "Every week"
+    if @quote.recurrence == "Every week"
       discount = 20
-    elsif quote.recurrence == "Every other week"
+    elsif @quote.recurrence == "Every other week"
       discount = 15
-    elsif quote.recurrence == "Once a month"
+    elsif @quote.recurrence == "Once a month"
       amount = 10
     else
       amount = 100
@@ -146,7 +144,7 @@ class QuotesController < ApplicationController
         password_field.value = ENV['thumbtack_pw']
       end.submit
 
-      lead_page = m.get(quote.name).form_with(id: "quote-on-request") do |form|
+      lead_page = m.get(@quote.name).form_with(id: "quote-on-request") do |form|
         form.field_with(:name => 'size').options[0].click
         quote_price_field = form.field_with(:id => 'estimate_fixed_price_per_unit')
         quote_price_field.value = quoted_value
