@@ -122,8 +122,6 @@ class QuotesController < ApplicationController
       amount = 219
     elsif quote.bedrooms == "5+ bedrooms"
       amount = 249  
-    else
-      break
     end
 
     if quote.recurrence == "Every week"
